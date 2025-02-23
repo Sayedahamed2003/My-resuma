@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ resume.name }}'s Resume</title>
+    <style><!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>{{ resume.name }} - Resume</title>
+            <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        </head>
+        <body>
+            <div class="resume">
+                <header>
+                    <h1>{{ resume.name }}</h1>
+                    <h2>{{ resume.profession }}</h2>
+                    <p>{{ resume.contact.email }}</p>
+                    <p>{{ resume.contact.phone }}</p>
+                    <p><a href="{{ resume.contact.linkedin }}" target="_blank">LinkedIn</a></p>
+                    <p><a href="{{ resume.contact.github }}" target="_blank">GitHub</a></p>
+                </header>
+                <section class="about">
+                    <h3>About Me</h3>
+                    <p>Aspiring Cloud and DevOps Engineer with hands-on experience in Linux, AWS, Azure, Terraform, DevOps practices, and Python. Skilled in cloud infrastructure management, automation, and scripting to streamline deployments and optimize system performance. Passionate about continuous learning and implementing modern cloud technologies.</p>
+                </section>
+                <section class="skills">
+                    <h3>Skills</h3>
+                    <ul>
+                        {% for skill in resume.skills %}
+                        <li>{{ skill }}</li>
+                        {% endfor %}
+                    </ul>
+                </section>
+                <section class="certifications">
+                    <h3>Certifications</h3>
+                    <ul>
+                        {% for cert in resume.certifications %}
+                        <li>{{ cert }}</li>
+                        {% endfor %}
+                    </ul>
+                </section>
+                <section class="expertise">
+                    <h3>Expertise</h3>
+                    <ul>
+                        {% for exp in resume.expertise %}
+                        <li>{{ exp }}</li>
+                        {% endfor %}
+                    </ul>
+                </section>
+                <section class="languages">
+                    <h3>Languages</h3>
+                    <ul>
+                        {% for language, proficiency in resume.languages.items() %}
+                        <li>{{ proficiency }} {{ language }}</li>
+                        {% endfor %}
+                    </ul>
+                </section>
+                <section class="interests">
+                    <h3>Interests</h3>
+                    <ul>
+                        {% for interest in resume.interests %}
+                        <li>{{ interest }}</li>
+                        {% endfor %}
+                    </ul>
+                </section>
+                <section class="experience">
+                    <h3>Work Experience</h3>
+                    {% for job in resume.experience %}
+                    <div class="job">
+                        <h4>{{ job.job_title }}</h4>
+                        <p>{{ job.company }} ({{ job.duration }})</p>
+                        <ul>
+                            {% for desc in job.description %}
+                            <li>{{ desc }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endfor %}
+                </section>
+                <section class="education">
+                    <h3>Education</h3>
+                    {% for edu in resume.education %}
+                    <div class="education">
+                        <h4>{{ edu.degree }}</h4>
+                        <p>{{ edu.institution }}</p>
+                        <p>{{ edu.college }}</p>
+                        <p>GPA: {{ edu.gpa }}</p>
+                    </div>
+                    {% endfor %}
+                </section>
+            </div>
+        </body>
+        </html>
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            color: #4CAF50;
+        }
+        .header h2 {
+            margin: 0;
+            color: #777;
+            font-weight: normal;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section h3 {
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .contact-info, .skills {
+            list-style-type: none;
+            padding: 0;
+        }
+        .contact-info li, .skills li {
+            margin-bottom: 5px;
+        }
+        .contact-info a, .job a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .contact-info a:hover, .job a:hover {
+            text-decoration: underline;
+        }
+        .job, .education {
+            margin-bottom: 15px;
+        }
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .skills li {
+            background: #e0e0e0;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin: 5px;
+        }
+        .profile {
+            text-align: justify;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>{{ resume.name }}</h1>
+            <h2>{{ resume.profession }}</h2>
+        </div>
+
+        <div class="section">
+            <h3>Contact Information</h3>
+            <ul class="contact-info">
+                <li>Email: <a href="mailto:{{ resume.contact.email }}">{{ resume.contact.email }}</a></li>
+                <li>Phone: {{ resume.contact.phone }}</li>
+                <li>LinkedIn: <a href="{{ resume.contact.linkedin }}">{{ resume.contact.linkedin }}</a></li>
+                <li>GitHub: <a href="{{ resume.contact.github }}">{{ resume.contact.github }}</a></li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>Experience</h3>
+            {% for job in resume.experience %}
+            <div class="job">
+                <h4>{{ job.job_title }} at {{ job.company }}</h4>
+                <p><em>{{ job.duration }}</em></p>
+                <p>{{ job.description }}</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="section">
+            <h3>Education</h3>
+        
+         {% for edu in resume.education %}
+            <div class="education">
+                <h4>{{ edu.degree }}</h4>
+                <p><strong>{{ edu.institution }}</strong></p>
+                <p>{{ edu.College }}</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="section">
+            <h3>Skills</h3>
+            <ul class="skills">
+                {% for skill in resume.skills %}
+                <li>{{ skill }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
